@@ -1,18 +1,31 @@
- # Monitor de Frecuencia Cardíaca y Detección de Anomalías 🫀
+# 🏥 Central de Triaje IoT: Monitorización Médica en Tiempo Real
 
-Este proyecto es una simulación en Python de un sistema de monitorización cardíaca para dispositivos portables (wearables, como relojes inteligentes). Su objetivo es detectar eventos cardíacos anómalos (como paradas cardíacas o ritmos irregulares) y emitir alertas, filtrando posibles falsos positivos generados por la actividad física del usuario.
+## 📖 Sobre el Proyecto
+Este proyecto es una Prueba de Concepto (PoC) de un sistema de telemedicina diseñado para monitorizar constantes vitales en tiempo real y **reducir la fatiga de alertas hospitalarias**. 
 
-## ⚙️ Lógica y Simulación de Hardware
+A través de la integración de múltiples sensores simulados (frecuencia cardíaca y movimiento), el sistema aplica algoritmos de triaje para distinguir entre emergencias médicas reales y falsos positivos (por ejemplo, alteraciones del pulso debidas a que el paciente se está moviendo), mostrando los datos en un panel web interactivo.
 
-Dado que el código está diseñado para probar la lógica de evaluación médica sin necesidad de hardware físico, el sistema simula la integración de dos sensores principales:
+## ✨ Características Principales
+* **Telemetría en Tiempo Real:** Visualización continua de datos sin bloqueos del servidor utilizando manejo de estado asíncrono (`st.session_state` y `st.rerun`).
+* **Algoritmo de Triaje Inteligente:** Lógica condicional que evalúa el estado del paciente (Estable, Alerta Médica, Parada Cardíaca) cruzando datos de ritmo cardíaco con detectores de movimiento para anular falsas alarmas.
+* **Visualización Dinámica:** Gráficos de evolución temporal que simulan un monitor de constantes (electrocardiograma básico) guardando el historial en la memoria de la sesión.
+* **Interfaz de Usuario (UI) Clínica:** Panel limpio y centrado en la accesibilidad, con indicadores de color estándar en la industria médica.
 
-1. **Sensor de Movimiento (Acelerómetro):** Un sensor que devuelve un valor digital (`1` o `0`) para indicar la existencia o ausencia de movimiento en el momento de la lectura. Si hay movimiento durante un ritmo cardíaco alterado, el sistema lo interpreta como un esfuerzo físico normal (falso positivo) y omite la alerta médica.
+## 🏗️ Arquitectura del Sistema
+El proyecto está dividido en componentes modulares para facilitar la escalabilidad futura hacia hardware real:
+1. **Generación de Datos (`sensor_pulsaciones.py`, `sensor_movimiento.py`):** Módulos independientes que actúan como "Hardware Virtual", generando datos biométricos.
+2. **Motor Lógico:** Capa de procesamiento que aplica las reglas de validación clínica.
+3. **Frontend (`app.py`):** Interfaz web desarrollada íntegramente en Python puro.
 
-2. **Sensor de Pulso (Fotopletismografía - PPG):** Un sensor óptico que detecta las pulsaciones. En un entorno físico, el sistema guardaría cada latido en una variable contador que se estaría incrementando continuamente durante un intervalo exacto de 60 segundos. Al finalizar este intervalo de tiempo, el dato final se guarda en la variable `pulsaciones` (representando los Latidos Por Minuto o BPM) y el contador se reinicia a `0` para el siguiente ciclo.
+## 🚀 Tecnologías Utilizadas
+* **Python 3.x:** Lenguaje principal.
+* **Streamlit:** Framework para el despliegue de la aplicación web y manejo del panel interactivo.
+* **Plotly / Streamlit Native Charts:** Para la renderización gráfica de señales biomédicas.
 
-## 🚀 Características del Código
+## 💻 Instalación y Ejecución Local
+Si deseas clonar este proyecto y ejecutarlo en tu propia máquina, sigue estos pasos:
 
-- **Prevención de Falsos Positivos:** Implementación de lógica condicional que cruza los datos de frecuencia cardíaca con los datos de movimiento.
-- **Manejo de Excepciones:** Uso de bloques `try-except` para garantizar que las entradas manuales durante la simulación sean estrictamente valores numéricos (enteros o booleanos).
-- **Ejecución en Bucle:** El sistema se mantiene monitorizando "en tiempo real" hasta que el usuario (o el sistema médico) decida detener la simulación.
+1. Clona el repositorio:
+   ```bash
+   git clone [https://github.com/TU_USUARIO/TU_REPOSITORIO.git](https://github.com/TU_USUARIO/TU_REPOSITORIO.git)
 
